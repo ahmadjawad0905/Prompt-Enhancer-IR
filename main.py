@@ -6,12 +6,16 @@ OLLAMA_URL = "http://localhost:11434/api/generate"
 
 st.set_page_config(layout="wide")
 
-st.title("Prompt Enhancer with Phi-3")
+st.title("Promptify")
 
 st.markdown("### Enter your prompt")
 user_query = st.text_input("", placeholder="Type your prompt here...")
 
-model = st.selectbox('Select Model',['mistral:7b','phi3:3.8b'])
+st.subheader("Select Model")
+model = st.selectbox('',['mistral:7b','phi3:3.8b'])
+
+st.subheader("Select Enhancement Mode")
+mode = st.radio("",["Academic","Coding","Research","Health","Travel"])
 
 def stream_ollama(prompt, placeholder,model):
     payload = {
@@ -99,6 +103,8 @@ Your goals are:
 8. Make the prompt actionable and precise
 9. Use modern prompt engineering best practices
 10. Avoid changing the meaning of the original request
+
+Enhance the prompt according to this feild: {mode}
 
 When enhancing prompts, follow this structure whenever applicable:
 
