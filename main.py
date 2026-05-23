@@ -11,9 +11,11 @@ st.title("Prompt Enhancer with Phi-3")
 st.markdown("### Enter your prompt")
 user_query = st.text_input("", placeholder="Type your prompt here...")
 
-def stream_ollama(prompt, placeholder):
+model = st.selectbox('Select Model',['mistral:7b','phi3:3.8b'])
+
+def stream_ollama(prompt, placeholder,model):
     payload = {
-        "model": "phi3:3.8b",
+        "model": model,
         "prompt": prompt,
         "stream": True
     }
@@ -39,9 +41,10 @@ def stream_ollama(prompt, placeholder):
 
     return full_response
 
-
+# Enhance Button Click
 if st.button("Enhance Prompt"):
 
+    # Prompt and other stuff for classification of prompt
     classify_prompt = f"""
     Classify this query into one category only:
 
@@ -58,7 +61,7 @@ if st.button("Enhance Prompt"):
     """
 
     classify_payload = {
-        "model": "phi3:3.8b",
+        "model": model,
         "prompt": classify_prompt,
         "stream": False
             }
@@ -74,6 +77,7 @@ if st.button("Enhance Prompt"):
     st.subheader("Query Type")
     st.success(query_type)
 
+    # Prompt to generate Enhance Prompt
     if user_query:
 
          prompt = f"""
@@ -143,12 +147,14 @@ Enhanced Prompt:
             enhanced_text = stream_ollama(
                 prompt,
                 enhanced_placeholder,
+                model
             )
 
             st.subheader("Enhanced Query Results")
 
             result_placeholder = st.empty()
 
+            # Generate Result from Enhanced Prompt
             prompt_enhance = f"""
 {enhanced_text}
 
@@ -159,6 +165,7 @@ Maximum 2 paragraphs.
             stream_ollama(
                 prompt_enhance,
                 result_placeholder,
+                model
             )
 
     with right_column:
@@ -171,6 +178,7 @@ Maximum 2 paragraphs.
 
             original_placeholder = st.empty()
 
+            # Generate Result for Orignal Prompt
             prompt_original = f"""
 {user_query}
 
@@ -180,7 +188,8 @@ Maximum 2 paragraphs.
 
             stream_ollama(
                 prompt_original,
-                original_placeholder
+                original_placeholder,
+                model
             )
 
 else:
