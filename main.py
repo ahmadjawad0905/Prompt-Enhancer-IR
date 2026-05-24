@@ -12,10 +12,12 @@ st.markdown("### Enter your prompt")
 user_query = st.text_input("", placeholder="Type your prompt here...")
 
 st.subheader("Select Model")
-model = st.selectbox('',['mistral:7b','phi3:3.8b'],index=1)
+model = st.selectbox('',['mistral:7b','phi3:3.8b','qwen2.5:3b'],index=1)
 
 st.subheader("Select Enhancement Mode")
 mode = st.radio("",["Academic","Coding","Research","Health","Travel"],index=1)
+
+
 
 def stream_ollama(prompt, placeholder,model):
     payload = {
