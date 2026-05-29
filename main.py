@@ -7,6 +7,7 @@ OLLAMA_URL = "http://localhost:11434/api/generate"
 st.set_page_config(layout="wide")
 
 st.title("Promptify")
+st.divider()
 
 st.markdown("### Enter your prompt")
 user_query = st.text_input("", placeholder="Type your prompt here...")
@@ -46,7 +47,7 @@ def stream_ollama(prompt, placeholder,model):
                 placeholder.markdown(full_response)
 
     return full_response
-
+st.divider()
 # Enhance Button Click
 if st.button("Enhance Prompt"):
 
